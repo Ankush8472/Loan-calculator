@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Clarity: Loan, EMI Calculator & Blog</title>
+    <title>Financial Clarity: Loan, EMI Calculator, Guides & Blog</title>
     
     <!-- Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,12 +32,20 @@
             color: #ffffff;
             background-color: #2563eb; /* Tailwind's blue-600 */
         }
-        /* Style for blog article content */
+        /* Style for article/guide content */
         .article-content h2 {
             font-size: 1.5rem;
             font-weight: 600;
             margin-top: 2rem;
             margin-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
         }
         .article-content p, .article-content li {
             margin-bottom: 1rem;
@@ -46,6 +54,10 @@
         .article-content ul {
             list-style-type: disc;
             padding-left: 1.5rem;
+        }
+        .article-content strong {
+            font-weight: 600;
+            color: #1f2937;
         }
     </style>
 </head>
@@ -61,36 +73,30 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="#" id="nav-home" class="nav-link-active px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('home')">Calculator</a>
+                        <a href="#" id="nav-guides" class="text-gray-500 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('guides')">Guides</a>
                         <a href="#" id="nav-blog" class="text-gray-500 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('blog')">Blog</a>
                         <a href="#" id="nav-about" class="text-gray-500 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('about')">About Us</a>
-                        <a href="#" id="nav-privacy" class="text-gray-500 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('privacy')">Privacy Policy</a>
-                        <a href="#" id="nav-terms" class="text-gray-500 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('terms')">Terms of Service</a>
                     </div>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                     </button>
                 </div>
             </div>
         </nav>
-        <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('home'); closeMobileMenu();">Calculator</a>
+                <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('guides'); closeMobileMenu();">Guides</a>
                 <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('blog'); closeMobileMenu();">Blog</a>
                 <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('about'); closeMobileMenu();">About Us</a>
-                <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('privacy'); closeMobileMenu();">Privacy Policy</a>
-                <a href="#" class="text-gray-500 hover:bg-blue-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onclick="showPage('terms'); closeMobileMenu();">Terms of Service</a>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8 min-h-screen">
 
         <!-- Home Page / Calculator -->
         <div id="page-home">
@@ -101,16 +107,12 @@
 
             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-5">
-                    <!-- Form Section -->
                     <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-gray-200">
                         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Loan Details</h2>
                         <form id="loan-form" class="space-y-5">
                             <div>
                                 <label for="loanType" class="block text-sm font-medium text-gray-700">Loan Calculation Type</label>
-                                <select id="loanType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                                    <option value="emi" selected>EMI (Reducing Balance)</option>
-                                    <option value="simple">Simple Interest</option>
-                                </select>
+                                <select id="loanType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"><option value="emi" selected>EMI (Reducing Balance)</option><option value="simple">Simple Interest</option></select>
                             </div>
                             <div>
                                 <label for="loanAmount" class="block text-sm font-medium text-gray-700">Loan Amount (₹)</label>
@@ -127,47 +129,89 @@
                             <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Calculate</button>
                         </form>
                     </div>
-
-                    <!-- Results Section -->
                     <div class="lg:col-span-3 p-6 md:p-8 bg-blue-50">
                         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Your Financial Breakdown</h2>
-                        <div id="results-summary" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                            <!-- Results will be injected here by JavaScript -->
-                        </div>
-                        <div class="chart-container bg-white p-4 rounded-lg shadow">
-                            <canvas id="loanChart"></canvas>
-                        </div>
+                        <div id="results-summary" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"></div>
+                        <div class="chart-container bg-white p-4 rounded-lg shadow"><canvas id="loanChart"></canvas></div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-12 bg-white p-8 rounded-xl shadow-lg">
-                <h2 class="text-2xl font-bold text-center mb-6">Understanding Your Loan</h2>
-                <div class="space-y-6 text-gray-700 leading-relaxed">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">What is an EMI?</h3>
-                        <p>An Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used to pay off both interest and principal each month so that over a specified number of years, the loan is paid off in full. With every payment, the principal component of the loan reduces.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Reducing Balance vs. Simple Interest</h3>
-                        <p>Our calculator supports two primary methods. The <strong>Reducing Balance Method</strong> (standard for most EMIs like home or car loans) calculates interest on the outstanding loan amount after each installment. This means you pay less interest over time. <strong>Simple Interest</strong>, on the other hand, calculates interest on the initial principal for the entire loan duration, which is less common for consumer loans but useful for certain calculations.</p>
+            <div class="mt-12 bg-white p-8 rounded-xl shadow-lg article-content">
+                <h2 class="text-2xl font-bold text-center mb-6">Why Use the LoanClarity Calculator?</h2>
+                <p>Navigating the world of loans can be confusing. Interest rates, tenures, and payment schedules create a complex picture that can be hard to understand. Our goal is to bring simplicity and clarity to this process. We provide more than just numbers; we provide insights.</p>
+                <h3>Comprehensive Breakdowns</h3>
+                <p>Instead of just a single EMI number, our tool shows you the complete picture. You can clearly see the total interest you'll pay over the loan's lifetime versus the principal amount you borrowed. This vital distinction helps you grasp the true cost of your loan.</p>
+                <h3>Instant & Accurate</h3>
+                <p>Our calculations are performed instantly in your browser, ensuring your data remains private. We use industry-standard formulas for both EMI (reducing balance) and simple interest calculations, so you can trust the results for your planning and comparison needs.</p>
+                <h3>Educational Resources</h3>
+                <p>We believe an informed borrower is an empowered borrower. That's why we've built a library of <strong>Guides and Blog</strong> articles to help you understand complex financial topics, improve your financial health, and make smarter decisions with your money.</p>
+                
+                <h2 class="text-2xl font-bold text-center mt-12 mb-6">Frequently Asked Questions (FAQ)</h2>
+                <h3>What is an EMI?</h3>
+                <p>An Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used to pay off both interest and principal each month so that over a specified number of years, the loan is paid off in full. With every payment, the principal component of the loan reduces.</p>
+                <h3>What is the difference between reducing balance and simple interest?</h3>
+                <p>The <strong>Reducing Balance Method</strong> (standard for most EMIs like home or car loans) calculates interest on the outstanding loan amount after each installment. This is beneficial for the borrower as you pay less interest over time. <strong>Simple Interest</strong> calculates interest on the initial principal for the entire loan duration. It's a straightforward but often more expensive method.</p>
+                <h3>How can I get a lower interest rate on my loan?</h3>
+                <p>Several factors can help you secure a lower rate. A high credit score is the most important. Additionally, making a larger down payment, choosing a shorter loan tenure, and comparing offers from multiple lenders can lead to significant savings. Check out our blog post, "5 Tips for a Low-Interest Loan," for more details.</p>
+            </div>
+        </div>
+
+        <!-- Financial Guides Main Page -->
+        <div id="page-guides" class="hidden bg-white p-8 rounded-xl shadow-lg">
+            <h1 class="text-3xl font-bold mb-6 text-center">Financial Guides</h1>
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
+                    <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                        <h2 class="text-2xl font-semibold mb-2">The Ultimate Guide to Creating a Budget</h2>
+                        <p class="text-gray-600 mb-4">A budget is the foundation of financial wellness. This step-by-step guide will walk you through creating a personal budget that works for you, helps you save money, and achieve your financial goals.</p>
+                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800" onclick="showPage('guide-budgeting')">Read The Guide &rarr;</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Budgeting Guide Article Page -->
+        <div id="page-guide-budgeting" class="hidden bg-white p-8 rounded-xl shadow-lg">
+            <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 mb-6 inline-block" onclick="showPage('guides')">&larr; Back to Guides</a>
+            <h1 class="text-3xl font-bold mb-4">The Ultimate Guide to Creating a Budget</h1>
+            <div class="article-content text-gray-700">
+                <p>Creating a budget is the single most effective step you can take to control your financial life. It's not about restriction; it's about empowerment. A budget gives you a clear picture of where your money is going and helps you direct it towards what truly matters. This guide will break down the process into simple, manageable steps.</p>
+                <h2>Step 1: Calculate Your Monthly Income</h2>
+                <p>First, figure out exactly how much money you have coming in each month. This is your net income—the amount you take home after taxes and other deductions from your paycheck. If your income is irregular, look at your bank statements for the past 3-6 months and calculate a conservative monthly average.</p>
+                <h2>Step 2: Track Your Expenses</h2>
+                <p>For one month, track every single expense. This can be eye-opening. Use a notebook, a spreadsheet, or a budgeting app. Categorize your spending into groups like:</p>
+                <ul>
+                    <li><strong>Fixed Expenses:</strong> Rent/mortgage, loan payments, insurance premiums.</li>
+                    <li><strong>Variable Expenses:</strong> Groceries, fuel, utilities, entertainment.</li>
+                    <li><strong>Occasional Expenses:</strong> Car maintenance, gifts, travel.</li>
+                </ul>
+                <h2>Step 3: Analyze and Set Goals</h2>
+                <p>Once you know where your money is going, you can decide where you *want* it to go. Compare your income to your expenses. Are you spending more than you earn? Where can you cut back? Set clear financial goals. Do you want to pay off debt, save for a down payment, or build an emergency fund? Your goals will motivate you to stick to your budget.</p>
+                <h2>Step 4: Create Your Budget Plan (The 50/30/20 Rule)</h2>
+                <p>A popular and simple framework is the 50/30/20 rule:</p>
+                <ul>
+                    <li><strong>50% for Needs:</strong> Allocate half of your income for essential expenses like housing, utilities, groceries, and transportation.</li>
+                    <li><strong>30% for Wants:</strong> Use 30% for lifestyle choices like dining out, shopping, hobbies, and entertainment.</li>
+                    <li><strong>20% for Savings & Debt Repayment:</strong> Dedicate at least 20% of your income to saving for the future and paying off high-interest debt.</li>
+                </ul>
+                <p>This is just a guideline. Adjust the percentages to fit your personal situation and goals.</p>
+                <h2>Step 5: Review and Adjust Regularly</h2>
+                <p>A budget isn't a "set it and forget it" document. Your income, expenses, and goals will change over time. Review your budget at least once a month. See how you did, celebrate your successes, and make adjustments for the upcoming month. Consistency is the key to long-term financial success.</p>
+            </div>
+        </div>
+
 
         <!-- Blog Page -->
         <div id="page-blog" class="hidden bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl font-bold mb-6 text-center">Our Blog</h1>
             <div class="max-w-3xl mx-auto">
                 <div class="space-y-8">
-                    <!-- Blog Post 1 -->
                     <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                         <h2 class="text-2xl font-semibold mb-2">5 Tips for a Low-Interest Loan</h2>
                         <p class="text-gray-600 mb-4">Securing a loan with a low interest rate can save you thousands over the life of the loan. Here are five actionable tips to help you get the best rate possible.</p>
                         <a href="#" class="font-semibold text-blue-600 hover:text-blue-800" onclick="showPage('blog-article-1')">Read More &rarr;</a>
                     </div>
-                    <!-- Blog Post 2 -->
                     <div class="p-6 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                         <h2 class="text-2xl font-semibold mb-2">Understanding Your Credit Score</h2>
                         <p class="text-gray-600 mb-4">Your credit score is a crucial number that lenders use to determine your creditworthiness. Learn what it is, why it matters, and how you can improve it.</p>
@@ -183,21 +227,16 @@
             <h1 class="text-3xl font-bold mb-4">5 Tips for a Low-Interest Loan</h1>
             <div class="article-content text-gray-700">
                 <p>Getting a loan is a significant financial step, and the interest rate you secure plays a huge role in your long-term costs. A lower rate means lower monthly payments and less money paid to the lender overall. Here are five proven strategies to help you qualify for a lower interest rate.</p>
-                
                 <h2>1. Improve Your Credit Score</h2>
-                <p>Your credit score is the single most important factor lenders consider. A higher score indicates you are a low-risk borrower. To improve your score, focus on paying all your bills on time, keeping your credit card balances low (below 30% of your limit is ideal), and avoiding opening too many new accounts at once.</p>
-
+                <p>Your credit score is the single most important factor lenders consider. A higher score indicates you are a low-risk borrower. To improve your score, focus on paying all your bills on time, keeping your credit card balances low (below 30% of your limit is ideal), and avoiding opening too many new accounts at once. Regularly check your credit report for errors and dispute any inaccuracies you find.</p>
                 <h2>2. Shop Around and Compare Lenders</h2>
-                <p>Don't accept the first loan offer you receive. Different lenders—including banks, credit unions, and online lenders—have different criteria and can offer vastly different rates. Get pre-qualified from at least three to five different lenders to compare offers.</p>
-
+                <p>Don't accept the first loan offer you receive. Different lenders—including banks, credit unions, and online lenders—have different criteria and can offer vastly different rates. Getting pre-qualified from at least three to five different lenders allows you to compare offers without impacting your credit score. Pay close attention to both the interest rate and the Annual Percentage Rate (APR), which includes fees.</p>
                 <h2>3. Consider a Shorter Loan Term</h2>
-                <p>Lenders often offer lower interest rates for shorter loan terms (e.g., a 3-year car loan vs. a 5-year one). While your monthly payment will be higher, you'll pay significantly less in total interest and be debt-free sooner.</p>
-
+                <p>Lenders often offer lower interest rates for shorter loan terms (e.g., a 3-year car loan vs. a 5-year one). While your monthly payment will be higher, you'll pay significantly less in total interest and be debt-free sooner. Use our calculator to see the difference in total interest paid between various loan tenures.</p>
                 <h2>4. Make a Larger Down Payment</h2>
-                <p>A substantial down payment reduces the lender's risk because it lowers the loan-to-value (LTV) ratio and shows you have skin in the game. For mortgages or auto loans, a down payment of 20% or more can often help you secure a better rate and avoid private mortgage insurance (PMI).</p>
-
+                <p>A substantial down payment reduces the lender's risk because it lowers the loan-to-value (LTV) ratio and shows you have skin in the game. For mortgages or auto loans, a down payment of 20% or more can often help you secure a better rate and avoid private mortgage insurance (PMI), which is an extra monthly cost.</p>
                 <h2>5. Look for Secured Loans</h2>
-                <p>If you have valuable assets, like a car or savings, you can use them as collateral for a secured loan. Because the lender has an asset to seize if you default, these loans are less risky for them and typically come with lower interest rates than unsecured personal loans.</p>
+                <p>If you have valuable assets, like a car or savings, you can use them as collateral for a secured loan. Because the lender has an asset to seize if you default, these loans are less risky for them and typically come with lower interest rates than unsecured personal loans. However, be fully aware of the risk of losing your collateral if you cannot make the payments.</p>
             </div>
         </div>
 
@@ -207,21 +246,18 @@
             <h1 class="text-3xl font-bold mb-4">Understanding Your Credit Score</h1>
             <div class="article-content text-gray-700">
                 <p>You've likely heard about the importance of your credit score, but what exactly is it? Think of it as your financial report card. It's a three-digit number that summarizes your credit history and helps lenders predict your ability to repay debt.</p>
-                
                 <h2>What is a Credit Score?</h2>
-                <p>A credit score is a numerical expression based on a level analysis of a person's credit files, to represent the creditworthiness of an individual. In India, credit scores typically range from 300 to 900. The higher the score, the better a borrower looks to potential lenders.</p>
-
+                <p>A credit score is a numerical expression based on a level analysis of a person's credit files, to represent the creditworthiness of an individual. In India, credit scores from bureaus like CIBIL typically range from 300 to 900. The higher the score, the better a borrower looks to potential lenders. A score above 750 is generally considered excellent.</p>
                 <h2>Why Does It Matter?</h2>
-                <p>A good credit score can unlock better interest rates on loans and credit cards, improve your chances of approval for rentals, and sometimes even lower your insurance premiums. It's a key component of your financial health.</p>
-
+                <p>A good credit score can unlock better interest rates on loans and credit cards, improve your chances of approval for rentals, and sometimes even lower your insurance premiums. It is a key component of your financial health that demonstrates your reliability to financial institutions.</p>
                 <h2>What Makes Up Your Score?</h2>
                 <p>Several factors influence your score, but some are more important than others:</p>
                 <ul>
-                    <li><strong>Payment History (35%):</strong> The most crucial factor. Making payments on time has the biggest positive impact on your score.</li>
-                    <li><strong>Amounts Owed (30%):</strong> This is your credit utilization ratio—how much of your available credit you're using. Keeping it low is key.</li>
-                    <li><strong>Length of Credit History (15%):</strong> A longer history of responsible credit management is beneficial.</li>
-                    <li><strong>New Credit (10%):</strong> Opening several new credit accounts in a short period can represent greater risk.</li>
-                    <li><strong>Credit Mix (10%):</strong> Lenders like to see that you can manage a mix of credit types, such as credit cards, retail accounts, and installment loans.</li>
+                    <li><strong>Payment History (35%):</strong> The most crucial factor. Making payments on time has the biggest positive impact on your score. Late payments, even by a few days, can have a significant negative effect.</li>
+                    <li><strong>Amounts Owed (30%):</strong> This is your credit utilization ratio—how much of your available credit you're using. Keeping it low is key. For example, if you have a credit card with a ₹1,00,000 limit and a balance of ₹20,000, your utilization is 20%.</li>
+                    <li><strong>Length of Credit History (15%):</strong> A longer history of responsible credit management is beneficial. This is why it's often advised not to close old credit card accounts that you no longer use.</li>
+                    <li><strong>New Credit (10%):</strong> Opening several new credit accounts in a short period can represent greater risk. Each application can result in a "hard inquiry" on your report, which can temporarily lower your score.</li>
+                    <li><strong>Credit Mix (10%):</strong> Lenders like to see that you can manage a mix of credit types, such as credit cards (revolving credit) and installment loans (like a car loan or mortgage).</li>
                 </ul>
             </div>
         </div>
@@ -229,56 +265,68 @@
         <!-- About Us Page -->
         <div id="page-about" class="hidden bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl font-bold mb-4">About Us</h1>
-            <div class="space-y-4 text-gray-700 leading-relaxed">
-                <p>Welcome to LoanClarity, your trusted partner in navigating the complexities of financial planning. Our mission is to provide clear, accessible, and accurate tools to help you make informed decisions about your loans.</p>
-                <p>We believe that everyone deserves financial clarity. Whether you're planning for a new home, a car, or a personal project, understanding the financial implications is the first step towards achieving your goals. Our loan calculator is designed to be simple, intuitive, and powerful, giving you a complete picture of your financial commitments.</p>
-                <p>This website was created by [Your Name/Company Name] with the goal of demystifying loan calculations. We are committed to maintaining this tool and adding more resources to help you on your financial journey.</p>
+            <div class="space-y-4 text-gray-700 leading-relaxed article-content">
+                <p>Welcome to LoanClarity, your trusted partner in navigating the complexities of financial planning. Our mission is to provide clear, accessible, and accurate tools and resources to help you make informed decisions about your loans and overall financial health.</p>
+                <p>We believe that everyone deserves financial clarity. Whether you're planning for a new home, a car, a personal project, or simply trying to manage your money better, understanding the financial implications is the first step towards achieving your goals. Our loan calculator is designed to be simple, intuitive, and powerful, giving you a complete picture of your financial commitments.</p>
+                <h3>Our Philosophy</h3>
+                <p>In a world filled with financial jargon and complex products, we aim to be a beacon of simplicity. We are dedicated to breaking down difficult concepts into easy-to-understand information. From our interactive calculator to our in-depth guides and blog posts, every piece of content on this site is created with the user in mind.</p>
+                <h3>Who We Are</h3>
+                <p>This website was created by <strong>the team at LoanClarity</strong>, a group of passionate developers and financial enthusiasts with the goal of demystifying loan calculations and promoting financial literacy. We are committed to maintaining this tool, keeping our content up-to-date, and adding more resources to help you on your financial journey.</p>
             </div>
         </div>
 
         <!-- Privacy Policy Page -->
         <div id="page-privacy" class="hidden bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl font-bold mb-4">Privacy Policy</h1>
-            <div class="space-y-4 text-gray-700 leading-relaxed">
+            <div class="space-y-4 text-gray-700 leading-relaxed article-content">
                 <p><strong>Last updated: August 09, 2025</strong></p>
                 <p>Your privacy is important to us. It is LoanClarity's policy to respect your privacy regarding any information we may collect from you across our website, loanc.netlify.app.</p>
-                <h2 class="text-xl font-semibold mt-4">1. Information We Collect</h2>
-                <p>We only collect information about you if we have a reason to do so – for example, to provide our Services, to communicate with you, or to make our Services better.</p>
-                <p>The calculations you perform on this site are processed in your browser and are not stored on our servers. We do not ask for personal information like your name or email address to use our calculator.</p>
+                <h2>1. Information We Collect</h2>
+                <p>We only collect information about you if we have a reason to do so – for example, to provide our Services, to communicate with you, or to make our Services better. The calculations you perform on this site are processed in your browser and are not stored on our servers. We do not ask for personal information like your name or email address to use our calculator.</p>
+                <h2>2. Cookies and Web Beacons</h2>
+                <p>Like any other website, LoanClarity uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information. We may also use third-party advertisements on loanc.netlify.app to support our site. Some of these advertisers may use technology such as cookies and web beacons when they advertise on our site, which will also send these advertisers (such as Google through the Google AdSense program) information including your IP address, your ISP, the browser you used to visit our site, and in some cases, whether you have Flash installed.</p>
+                <h2>3. Advertising Partners Privacy Policies</h2>
+                <p>You may consult this list to find the Privacy Policy for each of the advertising partners of LoanClarity. Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on LoanClarity, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit. Note that LoanClarity has no access to or control over these cookies that are used by third-party advertisers.</p>
             </div>
         </div>
 
         <!-- Terms of Service Page -->
         <div id="page-terms" class="hidden bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl font-bold mb-4">Terms of Service</h1>
-            <div class="space-y-4 text-gray-700 leading-relaxed">
-                <h2 class="text-xl font-semibold mt-4">1. Acceptance of Terms</h2>
+            <div class="space-y-4 text-gray-700 leading-relaxed article-content">
+                <h2>1. Acceptance of Terms</h2>
                 <p>By accessing and using loanc.netlify.app (the "Website"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this Website.</p>
-                <h2 class="text-xl font-semibold mt-4">2. Disclaimer of Warranty</h2>
-                <p>The tools and information on this Website are provided "as is". LoanClarity makes no warranties, expressed or implied, and hereby disclaims all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property. The calculations are for informational purposes only and should not be considered financial advice. You should consult with a professional financial advisor before making any financial decisions.</p>
+                <h2>2. Use of Information</h2>
+                <p>The content and tools provided on this website are for informational and educational purposes only and do not constitute financial, legal, or professional advice. You should not rely on the information on this website as an alternative to professional advice from a qualified financial advisor. Before making any financial decision, we recommend you consult with a professional.</p>
+                <h2>3. Disclaimer of Warranty</h2>
+                <p>The tools and information on this Website are provided "as is". LoanClarity makes no warranties, expressed or implied, and hereby disclaims all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property. The calculations are for informational purposes only and should not be considered financial advice.</p>
+                <h2>4. Limitation of Liability</h2>
+                <p>In no event shall LoanClarity or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on the Website, even if LoanClarity has been notified orally or in writing of the possibility of such damage.</p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white mt-12">
+    <footer class="bg-white mt-12 border-t">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
-            <div class="mb-2">
+            <div class="mb-4">
+                <a href="#" class="px-3 hover:text-blue-600" onclick="showPage('guides')">Guides</a> |
                 <a href="#" class="px-3 hover:text-blue-600" onclick="showPage('blog')">Blog</a> |
                 <a href="#" class="px-3 hover:text-blue-600" onclick="showPage('about')">About Us</a> |
                 <a href="#" class="px-3 hover:text-blue-600" onclick="showPage('privacy')">Privacy Policy</a> |
                 <a href="#" class="px-3 hover:text-blue-600" onclick="showPage('terms')">Terms of Service</a>
             </div>
             <p>&copy; 2025 LoanClarity. All Rights Reserved.</p>
-            <p class="text-xs mt-2">Disclaimer: The calculations provided are for estimation purposes only and should not be considered as final. Please consult a financial expert for precise information.</p>
+            <p class="text-xs mt-2 max-w-2xl mx-auto">Disclaimer: The calculations and information provided on this website are for estimation and educational purposes only and should not be considered as final or as professional financial advice. Please consult a qualified financial expert for precise information tailored to your situation.</p>
         </div>
     </footer>
 
     <script>
         // --- Page Navigation Logic ---
-        const pages = ['home', 'about', 'privacy', 'terms', 'blog', 'blog-article-1', 'blog-article-2'];
+        const pages = ['home', 'about', 'privacy', 'terms', 'blog', 'guides', 'blog-article-1', 'blog-article-2', 'guide-budgeting'];
         const navLinks = {
             home: document.getElementById('nav-home'),
+            guides: document.getElementById('nav-guides'),
             blog: document.getElementById('nav-blog'),
             about: document.getElementById('nav-about'),
             privacy: document.getElementById('nav-privacy'),
@@ -286,48 +334,36 @@
         };
 
         function showPage(pageId) {
-            // Hide all pages
             pages.forEach(page => {
                 const el = document.getElementById(`page-${page}`);
                 if (el) el.classList.add('hidden');
             });
-            // Deactivate all nav links
             Object.values(navLinks).forEach(link => {
                 if (link) {
-                    link.classList.remove('nav-link-active');
+                    link.classList.remove('nav-link-active', 'text-gray-500');
                     link.classList.add('text-gray-500');
                 }
             });
             
-            // Show the selected page
             const pageToShow = document.getElementById(`page-${pageId}`);
             if (pageToShow) pageToShow.classList.remove('hidden');
             
-            // Determine which nav link to activate
             let activeNavId = pageId;
-            if (pageId.startsWith('blog')) {
-                activeNavId = 'blog';
-            }
+            if (pageId.startsWith('blog-')) activeNavId = 'blog';
+            if (pageId.startsWith('guide-')) activeNavId = 'guides';
             
-            // Activate the selected nav link
             if (navLinks[activeNavId]) {
                 navLinks[activeNavId].classList.remove('text-gray-500');
                 navLinks[activeNavId].classList.add('nav-link-active');
             }
             
-            // Scroll to top
             window.scrollTo(0, 0);
         }
         
-        // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        function closeMobileMenu() {
-            mobileMenu.classList.add('hidden');
-        }
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        function closeMobileMenu() { mobileMenu.classList.add('hidden'); }
 
         // --- Calculator Logic ---
         const loanForm = document.getElementById('loan-form');
@@ -335,19 +371,22 @@
         const loanChartCanvas = document.getElementById('loanChart').getContext('2d');
         let myChart;
 
-        loanForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            calculateAndDisplay();
-        });
-        
+        loanForm.addEventListener('submit', (e) => { e.preventDefault(); calculateAndDisplay(); });
         document.getElementById('loanType').addEventListener('change', calculateAndDisplay);
         document.addEventListener('DOMContentLoaded', () => {
             calculateAndDisplay();
-            showPage('home'); // Show home page by default
+            showPage('home');
+            // Add navigation for footer links
+            document.querySelectorAll('footer a').forEach(link => {
+                const page = link.getAttribute('onclick').match(/'(.*?)'/)[1];
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(page);
+                });
+            });
         });
 
         function calculateAndDisplay() {
-            const loanType = document.getElementById('loanType').value;
             const loanAmount = parseFloat(document.getElementById('loanAmount').value);
             const annualInterestRate = parseFloat(document.getElementById('interestRate').value);
             const loanTenureYears = parseFloat(document.getElementById('loanTenure').value);
@@ -358,21 +397,18 @@
                 return;
             }
             
+            const loanType = document.getElementById('loanType').value;
             let monthlyPayment, totalInterest, totalPayment;
             const numberOfPayments = loanTenureYears * 12;
 
             if (loanType === 'emi') {
                 const monthlyInterestRate = annualInterestRate / 100 / 12;
-                if (monthlyInterestRate === 0) {
-                    monthlyPayment = loanAmount / numberOfPayments;
-                } else {
-                    monthlyPayment = loanAmount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-                }
+                monthlyPayment = monthlyInterestRate === 0 ? loanAmount / numberOfPayments : loanAmount * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
                 totalPayment = monthlyPayment * numberOfPayments;
                 totalInterest = totalPayment - loanAmount;
-            } else { // simple interest
+            } else {
                 totalInterest = loanAmount * (annualInterestRate / 100) * loanTenureYears;
-                totalPayment = loanAmount + totalInterest;
+                totalPayment = loanAmount + totalPayment;
                 monthlyPayment = totalPayment / numberOfPayments;
             }
             
@@ -380,86 +416,38 @@
             displaySummary(monthlyPayment, loanAmount, totalInterest, totalPayment);
         }
 
-        function displaySummary(monthlyPayment, principal, totalInterest, totalPayment) {
+        function displaySummary(monthly, principal, interest, total) {
             const formatCurrency = (num) => `₹ ${num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            
             resultsSummary.innerHTML = `
-                <div class="summary-box bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-sm font-medium text-gray-500">Monthly Payment</h3>
-                    <p class="mt-1 text-2xl font-semibold text-blue-600">${formatCurrency(monthlyPayment)}</p>
-                </div>
-                <div class="summary-box bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-sm font-medium text-gray-500">Principal Amount</h3>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">${formatCurrency(principal)}</p>
-                </div>
-                <div class="summary-box bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-sm font-medium text-gray-500">Total Interest</h3>
-                    <p class="mt-1 text-2xl font-semibold text-red-600">${formatCurrency(totalInterest)}</p>
-                </div>
-                <div class="summary-box bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-sm font-medium text-gray-500">Total Payment</h3>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">${formatCurrency(totalPayment)}</p>
-                </div>
-            `;
+                <div class="bg-white p-4 rounded-lg shadow"><h3 class="text-sm font-medium text-gray-500">Monthly Payment</h3><p class="mt-1 text-2xl font-semibold text-blue-600">${formatCurrency(monthly)}</p></div>
+                <div class="bg-white p-4 rounded-lg shadow"><h3 class="text-sm font-medium text-gray-500">Principal Amount</h3><p class="mt-1 text-2xl font-semibold text-gray-900">${formatCurrency(principal)}</p></div>
+                <div class="bg-white p-4 rounded-lg shadow"><h3 class="text-sm font-medium text-gray-500">Total Interest</h3><p class="mt-1 text-2xl font-semibold text-red-600">${formatCurrency(interest)}</p></div>
+                <div class="bg-white p-4 rounded-lg shadow"><h3 class="text-sm font-medium text-gray-500">Total Payment</h3><p class="mt-1 text-2xl font-semibold text-gray-900">${formatCurrency(total)}</p></div>`;
         }
         
         function updateChart(principal, totalInterest) {
-            if (myChart) {
-                myChart.destroy();
-            }
-            
-            const data = {
-                labels: ['Principal Amount', 'Total Interest'],
-                datasets: [{
-                    data: [principal, totalInterest > 0 ? totalInterest : 0.01], // Ensure chart renders even with 0 interest
-                    backgroundColor: [
-                        '#3b82f6', // blue-500
-                        '#ef4444'  // red-500
-                    ],
-                    hoverBackgroundColor: [
-                        '#2563eb', // blue-600
-                        '#dc2626'  // red-600
-                    ],
-                    borderWidth: 0
-                }]
-            };
-
+            if (myChart) myChart.destroy();
             myChart = new Chart(loanChartCanvas, {
                 type: 'doughnut',
-                data: data,
+                data: {
+                    labels: ['Principal Amount', 'Total Interest'],
+                    datasets: [{
+                        data: [principal, totalInterest > 0 ? totalInterest : 0.01],
+                        backgroundColor: ['#3b82f6', '#ef4444'],
+                        hoverBackgroundColor: ['#2563eb', '#dc2626'],
+                        borderWidth: 0
+                    }]
+                },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Principal vs. Interest Breakdown',
-                            font: {
-                                size: 16
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed);
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
+                        legend: { position: 'bottom' },
+                        title: { display: true, text: 'Principal vs. Interest Breakdown', font: { size: 16 } },
+                        tooltip: { callbacks: { label: (c) => `${c.label}: ${new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(c.parsed)}` } }
                     }
                 }
             });
         }
     </script>
-
 </body>
 </html>
